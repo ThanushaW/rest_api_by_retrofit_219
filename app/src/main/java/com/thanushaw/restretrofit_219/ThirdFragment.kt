@@ -1,13 +1,15 @@
 package com.thanushaw.restretrofit_219
 
+import android.R
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thanushaw.restretrofit_219.api.*
@@ -15,6 +17,7 @@ import com.thanushaw.restretrofit_219.databinding.FragmentThirdBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -54,17 +57,20 @@ class ThirdFragment : Fragment() {
                 if(response.body() != null){
                     setFragmentResultListener("requestKey_2") { _, bundle ->
                         val id = bundle.getInt("id")
-
+                        (activity as AppCompatActivity).supportActionBar?.title = "Post $id Comments"
                         val data = ArrayList<Comments>()
+                        var index = 0
                         response.body()!!.forEach{
-
                             if(it.postId == id){
+                                index++
                                 Log.i("Third Fragment","${it.id} and ${it.postId} and $id")
-                                data.add(Comments(postId = it.postId,id=it.id,name=it.name,email = it.email,body = it.body))
+                                //id of comment is over written by index (since user have no idea what id is)
+                                data.add(Comments(postId = it.postId,index,name=it.name,email = it.email,body = it.body))
                             }
                         }
                         val adapter = RecyclerViewCustomAdapter2(data)
                         recyclerview.adapter = adapter
+
                     }
                 }
             }

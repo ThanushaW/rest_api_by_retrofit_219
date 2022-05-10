@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -37,6 +38,7 @@ class SecondFragment : Fragment() {
 
         setFragmentResultListener("requestKey"){_,bundle->
             val id = bundle.getInt("id")
+            (activity as AppCompatActivity).supportActionBar?.title = "Post $id Info"
             val userId = bundle.getInt("userId")
             val title = bundle.getString("title")
             val body = bundle.getString("body")

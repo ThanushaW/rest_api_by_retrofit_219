@@ -66,9 +66,6 @@ class FirstFragment : Fragment() {
                         val body = response.body()!![it.toInt()-1].body
 
                         setFragmentResult("requestKey", bundleOf("id" to id,"userId" to userId,"title" to title,"body" to body))
-//                        Toast.makeText(parentFragment?.context, "${response.body()!![it.toInt()-1].toString()}", Toast.LENGTH_LONG)
-//                            .show()
-
                         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                     }
                 }
